@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type=text/javascript>
+        $(function() {
+          $('a#test').bind('click', function() {
+            $.get('/background_process_test',
+                function(data) {
+              //do nothing
+            });
+            return false;
+          });
+          $('#submitButton').bind('click', function() {
+            payload =
+            {
+            latitude : document.getElementById("latitude").value,
+            longitude : document.getElementById("longitude").value
+            }
+            fetch('/form_data', {
+					method: 'POST',
+					body: new URLSearchParams($.param(payload))
+				})
+					.then(function(response) {
+						if (response.status !== 200) {
+							alert(
+								'Looks like there was a problem. Status Code: ' +
+									response.status
+							);
+							return;
+						}
+					})
+					.catch(function(err) {
+						alert('Fetch Error :-S', err);
+					});
+
+            return false;
+          });
+        });
+
+<!--        $(document).ready(function(){-->
+<!--            var latitude, longitude;-->
+<!--            $("submit").click(function(){-->
+<!--                latitude = $(this).attr("latitude");-->
+<!--                longitude = $(this).attr("longitude");-->
+<!--                $.ajax({-->
+<!--                type : 'POST',-->
+<!--                url : "{{url_for('form_data')}}",-->
+<!--                contentType: 'application/json;charset=UTF-8',-->
+<!--                data : {'data':latitude}-->
+<!--            });-->
+<!--           });-->
+<!--         });-->
+</script>
+    <head>
+        <title>Welcome</title>
+        <link rel="stylesheet" type="text/css"href="/static/main.css"/>
+        <style>
+            html,body{
+                background-color: ;
+            }
+            h1{
+                color: black;
+            }
+            cont{
+                background-color: black;
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>Rover GUI</h1>
+        <div>
+            <img src="{{ url_for('video_feed') }}">
+        </div>
+        <br> <br>
+        <div id = "GPS">
+            <form name="gps">
+                <label for="latitude">Latitude</label>
+                <input id="latitude" name = "latitude" type="number">
+                <label for="longitude">Longitude</label>
+                <input id="longitude" name = "longitude" type="number">
+                <button type ="submit" id="submitButton">Submit</button>
+            </form>
+        </div>
+        <br> <br>
+        <div class = "container">
+        <form>
+            <a href=# id=test><button>Test</button></a>
+        </form>
+
+        </div>
+    </body>
+</html>
