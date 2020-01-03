@@ -1,4 +1,4 @@
-from port import values
+from check import sensorData
 
-y = values()
+y = sensorData()
 print(y)

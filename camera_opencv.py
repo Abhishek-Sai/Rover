@@ -60,7 +60,8 @@ class Camera(BaseCamera):
         camera1 = cv2.VideoCapture(Camera.video_source1)
         camera2 = cv2.VideoCapture(Camera.video_source2)
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        out = cv2.VideoWriter('output.avi', fourcc, 20.0, (640, 480))
+        out = cv2.VideoWriter('output.avi', fourcc, 10.0, (640, 480))
+        out1 = cv2.VideoWriter('output1.avi', fourcc, 10.0, (640, 480))
         if not (camera1.isOpened() or camera2.isOpened()):
             raise RuntimeError('Could not start camera.')
 
@@ -76,8 +77,10 @@ class Camera(BaseCamera):
             yield cv2.imencode('.jpg', img)[1].tobytes()
 
             ret, frame = camera1.read()
+            ret, frame1 = camera2.read()
 
             # output the frame
             out.write(frame)
+            out1.write(frame1)
 
 
