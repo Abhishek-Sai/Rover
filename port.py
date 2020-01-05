@@ -1,12 +1,13 @@
 import serial
 import time
 
+
 # set up the serial line
 
 # Read and record the data
-  # empty list to store the data
+# empty list to store the data
 def angle():
-    ser = serial.Serial('COM5', 115200)
+    ser = serial.Serial('COM11', 115200)
     time.sleep(2)
     data = []
     b = ser.readline()  # read a byte string
@@ -16,12 +17,16 @@ def angle():
     # flt = float(string)
     if (res[0] == 'ang'):
         angle = res[1]
-        #print(angle)
+        # print(angle)
     data.append(str(res))
-    #print(string)
+    f = open("log1.txt", "a+")
+    f.write(string)
+
+    # print(string)
     time.sleep(0.1)  # wait (sleep) 0.1 seconds
     ser.close()
     return angle
+
 
 # def coordinates():
 #     ser = serial.Serial('COM5', 115200)
