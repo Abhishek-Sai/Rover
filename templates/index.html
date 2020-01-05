@@ -3,7 +3,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type=text/javascript>
         $(function() {
-          $('a#test').bind('click', function() {
+          $('a#screenshot').bind('click', function() {
             $.get('/background_process_test',
                 function(data) {
               //do nothing
@@ -35,7 +35,39 @@
 
             return false;
           });
+          i = 0;
+          $(document).ready(function(){
+        $('body').bind('keypress', function(e) {
+            console.log(e.keyCode)
+            if (e.which === 97 || e.which === 115 || e.which === 100 || e.which === 119 || e.which === 65 || e.which === 83 || e.which === 68 || e.which === 87 ) {
+                console.log(e.keyCode)
+                payload =
+                {
+                  key : e.keyCode
+                }
+                fetch('/to_arduino', {
+					method: 'POST',
+					body: new URLSearchParams($.param(payload))
+				})
+					.then(function(response) {
+						if (response.status !== 200) {
+							alert(
+								'Looks like there was a problem. Status Code: ' +
+									response.status
+							);
+							return;
+						}
+					})
+					.catch(function(err) {
+						alert('Fetch Error :-S', err);
+					});
+
+            return false;
+
+            }
         });
+    });
+    });
 
 <!--        $(document).ready(function(){-->
 <!--            var latitude, longitude;-->
@@ -85,8 +117,11 @@
         <br> <br>
         <div class = "container">
         <form>
-            <a href=# id=test><button>Test</button></a>
+            <a href=# id=screenshot><button>Take Screenshot</button></a>
         </form>
+            <br><br>
+            <input type="text" id="testing">
+            <p>Keypresses: <span>0</span></p>
 
         </div>
     </body>

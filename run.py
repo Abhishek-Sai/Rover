@@ -2,11 +2,13 @@
 from importlib import import_module
 import os
 from flask import Flask, render_template, Response, request, json
+import serial
 
 # import camera driver
 # if os.environ.get('CAMERA'):
 from camera_opencv import Camera
-
+global i
+i = 0
 # else:
 #     from camera import Camera
 
@@ -39,7 +41,16 @@ def video_feed():
 
 @app.route('/background_process_test')
 def background_process_test():
-    os.system('py ./hello.py')
+    global i
+    os.system('py ./hello.py ' + str(i))
+    i = i + 1
+    return "nothing"
+
+@app.route('/to_arduino', methods=['POST'])
+def to_arduino():
+    print(request.form['key'])
+    # ser = serial.Serial('COM6', 9600)
+    # ser.write(request.form['key'].encode())
     return "nothing"
 
 
