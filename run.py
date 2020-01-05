@@ -6,7 +6,7 @@ from flask import Flask, render_template, Response, request, json
 # import camera driver
 # if os.environ.get('CAMERA'):
 from camera_opencv import Camera
-from port import portdata
+# from port import portdata
 
 # else:
 #     from camera import Camera
@@ -37,9 +37,9 @@ def video_feed():
     return Response(gen(Camera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/port_data')
-def port_data():
-    return Response(gen(portdata()))
+# @app.route('/port_data')
+# def port_data():
+#     return Response(gen(portdata()))
 
 @app.route('/background_process_test')
 def background_process_test():
