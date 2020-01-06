@@ -6,7 +6,6 @@
           $('a#screenshot').bind('click', function() {
             $.get('/background_process_test',
                 function(data) {
-              //do nothing
             });
             return false;
           });
@@ -34,6 +33,13 @@
 					});
 
             return false;
+            $('#start').bind('click', function() {
+            $.get('/background_process_test1',
+                function(data) {
+              //do nothing
+            });
+            return false;
+          });
           });
           i = 0;
           $(document).ready(function(){
@@ -121,8 +127,8 @@
         </form>
             <br><br>
             <input type="text" id="testing">
-            <p>Keypresses: <span>0</span></p>
-
+            <br><br>
+            <button type="button" id = "start">Start</button>
         </div>
     </body>
 </html>
