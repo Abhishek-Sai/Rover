@@ -2,17 +2,17 @@
 # of threading 
 import threading
 import os
+import datetime
 
 
 def task1():
-    import datetime
-
     now = datetime.datetime.now()
-    now_plus_10 = now + datetime.timedelta(seconds=10)
     print("Current Time =", now)
 
 
 def task2():
+    now_plus_10 = datetime.datetime.now() + datetime.timedelta(seconds=10)
+    print(now_plus_10)
 
 
 

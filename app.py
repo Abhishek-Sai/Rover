@@ -10,6 +10,8 @@ from camera_opencv import Camera
 
 global i
 i = 0
+global j
+j = 0
 
 app = Flask(__name__)
 
@@ -39,7 +41,7 @@ def video_feed():
 def background_process_test():
     global i
     print("Entered 1")
-    os.system('py ./hello.py ' + str(i))
+    os.system('py ./photo.py ' + str(i))
     i = i + 1
     print("Entered 2")
     return "nothing"
