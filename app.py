@@ -60,20 +60,20 @@ j = 0
 app = Flask(__name__)
 
 
-@app.route('/pag1')
-def index():
+@app.route('/page1')
+def index1():
     """Video streaming home page."""
     return render_template('index1.html')
 
 
 @app.route('/page2')
-def index():
+def index2():
     """Video streaming home page."""
     return render_template('index2.html')
 
 
 @app.route('/page3')
-def index():
+def index3():
     """Video streaming home page."""
     return render_template('index3.html')
 
