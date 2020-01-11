@@ -1,6 +1,8 @@
 import serial
 import time
-while True:
+
+
+def get_data():
     ser = serial.Serial('COM5', 9600)
     data = []
     time.sleep(1)
@@ -8,7 +10,7 @@ while True:
     string_n = b.decode()  # decode byte string into Unicode
     string = string_n.rstrip()  # remove \n and \r
     res = string.split()
-    while res[0] != "INVALID":
+    if res[0] != "INVALID":
         if res[0] == "lat":
             latitude = res[1]
             print(latitude)
@@ -21,5 +23,9 @@ while True:
             angle = res[5]
             print(angle)
             data.append(angle)
-    print(str(res))
     ser.close()
+    return data
+
+
+data = get_data()
+print(data)

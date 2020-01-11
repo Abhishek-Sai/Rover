@@ -3,6 +3,50 @@ from importlib import import_module
 import os
 from flask import Flask, render_template, Response, request, json
 import serial
+import threading
+import datetime
+import time
+import subprocess
+import signal
+import psutil
+
+# from check import get_data
+
+global now
+global data
+import tempfile
+
+
+def kill(proc_pid):
+    process = psutil.Process(proc_pid)
+    for proc in process.children(recursive=True):
+        proc.kill()
+    process.kill()
+
+
+def task1():
+    while True:
+        global now
+        now = datetime.datetime.now()
+        print("Current Time =", now)
+        time.sleep(10)
+
+
+def task2():
+    app.run(host='0.0.0.0', port=5000)
+
+
+def task3():
+    global data
+    temp = 0
+    while True:
+        with tempfile.TemporaryFile() as tempf:
+            proc = subprocess.Popen(['py', 'D:\\Work\\rover_gui\\sma.py'], stdout=tempf, shell=True)
+            proc.wait()
+            tempf.seek(0)
+            data = tempf.read().decode()
+            # os.killpg(os.getpgid(proc.pid), signal.SIGINT) # For Linux
+
 
 # import camera driver
 # if os.environ.get('CAMERA'):
@@ -16,10 +60,22 @@ j = 0
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/pag1')
 def index():
     """Video streaming home page."""
-    return render_template('index.html')
+    return render_template('index1.html')
+
+
+@app.route('/page2')
+def index():
+    """Video streaming home page."""
+    return render_template('index2.html')
+
+
+@app.route('/page3')
+def index():
+    """Video streaming home page."""
+    return render_template('index3.html')
 
 
 def gen(camera):
@@ -39,12 +95,16 @@ def video_feed():
 
 @app.route('/background_process_test')
 def background_process_test():
-    global i
     print("Entered 1")
-    os.system('py ./photo.py ' + str(i))
-    i = i + 1
-    print("Entered 2")
+    os.system('py ./photo.py ')
+    print("Finished")
     return "nothing"
+
+
+@app.route('/get_data')
+def get_data():
+    global data
+    return str(data)
 
 
 @app.route('/to_arduino', methods=['POST'])
@@ -52,6 +112,7 @@ def to_arduino():
     print(request.form['key'])
     # ser = serial.Serial('COM6', 9600)
     # ser.write(request.form['key'].encode())
+    # ser.close()
     return "nothing"
 
 
@@ -65,4 +126,16 @@ def form_data():
 
 if __name__ == '__main__':
     # app.run(debug=True)
-    app.run(host='0.0.0.0', port=5000)
+    t1 = threading.Thread(target=task1, name='t1')
+    t2 = threading.Thread(target=task3, name='t2')
+    t3 = threading.Thread(target=task2, name='t3')
+
+    # starting threads
+    t1.start()
+    t2.start()
+    t3.start()
+
+    # wait until all threads finish
+    t1.join()
+    t2.join()
+    t3.join()
