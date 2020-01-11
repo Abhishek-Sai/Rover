@@ -3,7 +3,7 @@ import time
 
 
 def get_data():
-    ser = serial.Serial('COM5', 9600)
+    ser = serial.Serial('COM5', 9600) # Change in Jetson
     data = []
     time.sleep(1)
     b = ser.readline()  # read a byte string

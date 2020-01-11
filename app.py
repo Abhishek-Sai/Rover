@@ -41,7 +41,7 @@ def task3():
     temp = 0
     while True:
         with tempfile.TemporaryFile() as tempf:
-            proc = subprocess.Popen(['py', 'D:\\Work\\rover_gui\\sma.py'], stdout=tempf, shell=True)
+            proc = subprocess.Popen(['py', 'D:\\Work\\rover_gui\\check.py'], stdout=tempf, shell=True)
             proc.wait()
             tempf.seek(0)
             data = tempf.read().decode()
@@ -110,7 +110,7 @@ def get_data():
 @app.route('/to_arduino', methods=['POST'])
 def to_arduino():
     print(request.form['key'])
-    # ser = serial.Serial('COM6', 9600)
+    # ser = serial.Serial('COM6', 9600)  # Change in Jetson
     # ser.write(request.form['key'].encode())
     # ser.close()
     return "nothing"
