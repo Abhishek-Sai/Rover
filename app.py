@@ -60,6 +60,8 @@ j = 0
 app = Flask(__name__)
 
 
+
+
 @app.route('/page1')
 def index1():
     """Video streaming home page."""
@@ -139,4 +141,3 @@ if __name__ == '__main__':
     t1.join()
     t2.join()
     t3.join()
-
