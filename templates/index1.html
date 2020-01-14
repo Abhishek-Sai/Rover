@@ -69,7 +69,10 @@
         });
         window.setInterval(function () {
             $.get('/get_data',function (data) {
-                   document.getElementById("time").value = data;
+                   console.log((data));
+                   document.getElementById("printLatitude").value = JSON.parse(data).latitude
+                   document.getElementById("printLongitude").value = JSON.parse(data).longitude
+                   document.getElementById("printAngle").value = JSON.parse(data).angle
             });
         }, 500 );
     });
@@ -118,8 +121,14 @@
         </div>
         <br><br>
         <div class="container" id="data">
-            <label for="time">Time</label>
-            <input id="time" name = "Time" type="text" readonly>
+            <label for="printLatitude">Latitude</label>
+            <input id="printLatitude" name = "printLatitude" type="text" readonly>
+            <br><br>
+             <label for="printLongitude">Longitude</label>
+            <input id="printLongitude" name = "printLongitude" type="text" readonly>
+            <br><br>
+             <label for="printAngle">Angle</label>
+            <input id="printAngle" name = "printAngle" type="text" readonly>
         </div>
     </body>
 </html>

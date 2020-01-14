@@ -9,12 +9,21 @@ import time
 import subprocess
 import signal
 import psutil
+from camera_opencv import Camera
+import tempfile
+import json
 
 # from check import get_data
 
 global now
 global data
-import tempfile
+global i
+i = 0
+global j
+j = 0
+global ser
+global ser1
+global json_data
 
 
 def kill(proc_pid):
@@ -48,18 +57,20 @@ def task3():
             # os.killpg(os.getpgid(proc.pid), signal.SIGINT) # For Linux
 
 
+def task4():
+    #global ser
+    #ser = serial.Serial('COM5', 9600)
+    return "hi"
+
+
+# def task5():
+#     global ser
+#     ser = serial.Serial('COM7', 9600)
+
+
 # import camera driver
 # if os.environ.get('CAMERA'):
-from camera_opencv import Camera
-
-global i
-i = 0
-global j
-j = 0
-
 app = Flask(__name__)
-
-
 
 
 @app.route('/page1')
@@ -105,15 +116,24 @@ def background_process_test():
 
 @app.route('/get_data')
 def get_data():
+    global ser
     global data
-    return str(data)
+    if data is None:
+        return "nothing"
+    else:
+        return data
 
 
 @app.route('/to_arduino', methods=['POST'])
 def to_arduino():
     print(request.form['key'])
-    # ser = serial.Serial('COM6', 9600)  # Change in Jetson
-    # ser.write(request.form['key'].encode())
+    global ser
+    # if request.form['key'] == "119":
+    #     ser.write(b'w')
+    # elif request.form['key'] == "97":
+    #     ser.write(b'a')
+
+    ser.write((request.form['key'] + "\n").encode())
     # ser.close()
     return "nothing"
 
@@ -130,14 +150,20 @@ if __name__ == '__main__':
     # app.run(debug=True)
     t1 = threading.Thread(target=task1, name='t1')
     t2 = threading.Thread(target=task3, name='t2')
+    t4 = threading.Thread(target=task4, name='t4')
+    #t5 = threading.Thread(target=task5, name='t5')
     t3 = threading.Thread(target=task2, name='t3')
 
     # starting threads
     t1.start()
     t2.start()
+    t4.start()
+    #t5.start()
     t3.start()
 
     # wait until all threads finish
     t1.join()
     t2.join()
+    t4.join()
+    #t5.join()
     t3.join()
