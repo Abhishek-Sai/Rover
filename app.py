@@ -24,6 +24,8 @@ j = 0
 global ser
 global ser1
 global json_data
+global c
+c = 0
 
 
 def kill(proc_pid):
@@ -63,13 +65,13 @@ def task4():
     return "hi"
 
 
-# def task5():
-#     global ser
-#     ser = serial.Serial('COM7', 9600)
+def task5():
+    global ser
+    ser = serial.Serial('COM7', 9600)
+    ser.flushInput()
+    time.sleep(1)
 
 
-# import camera driver
-# if os.environ.get('CAMERA'):
 app = Flask(__name__)
 
 
@@ -116,12 +118,13 @@ def background_process_test():
 
 @app.route('/get_data')
 def get_data():
-    global ser
+    global ser1
     global data
     if data is None:
         return "nothing"
     else:
         return data
+
 
 
 @app.route('/to_arduino', methods=['POST'])
@@ -132,8 +135,7 @@ def to_arduino():
     #     ser.write(b'w')
     # elif request.form['key'] == "97":
     #     ser.write(b'a')
-
-    ser.write((request.form['key'] + "\n").encode())
+    #ser.write((request.form['key'] + "\n").encode())
     # ser.close()
     return "nothing"
 

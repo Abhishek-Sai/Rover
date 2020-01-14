@@ -7,7 +7,7 @@ b = ser.readline()  # read a byte string
 string_n = b.decode()  # decode byte string into Unicode
 string = string_n.rstrip()  # remove \n and \r
 res = string.split()
-if res[0] == "INVALID":
+if res[0] == "INVALIDINVALID" or res[0] == "INVALID":
     if res[1] == "lat":
         latitude = res[2]
         # print(latitude)
@@ -27,4 +27,5 @@ if res[0] == "INVALID":
         json_data = json.dumps(data)
         # data.append(angle)
 print(json_data)
+ser.close()
 
