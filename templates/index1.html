@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="/static/jquery.min.js"></script>
     <script type=text/javascript>
        $(function () {
     $('a#panorama').bind('click', function () {
@@ -31,20 +31,19 @@
             });
 
         return false;
-        $('#start').bind('click', function () {
-            $.get('/background_process_test1',
-                function (data) {
+       // $('#start').bind('click', function () {
+       //     $.get('/background_process_test1',
+       //         function (data) {
                     //do nothing
-                });
-            return false;
-        });
+       //         });
+       //     return false;
+       // });
     });
     i = 0;
     $(document).ready(function () {
         $('body').bind('keypress', function (e) {
             console.log(e.keyCode)
-            if (e.which === 97 || e.which === 115 || e.which === 100 || e.which === 119 || e.which === 65 || e.which === 83 || e.which === 68 || e.which === 87) {
-                console.log(e.keyCode)
+            if (e.which === 97 || e.which === 115 || e.which === 100 || e.which === 119 || e.which === 65 || e.which === 83 || e.which === 68 || e.which === 87 || e.which === 99) {
                 payload = {
                     key: e.keyCode
                 }
@@ -93,9 +92,9 @@
     </head>
     <body>
         <h1>Rover GUI</h1>
-<!--        <div>-->
-<!--            <img src="{{ url_for('video_feed') }}">-->
-<!--        </div>-->
+        <div>
+          <img src="{{ url_for('video_feed') }}">
+        </div>
         <br> <br>
         <div id = "GPS">
             <form name="gps">

@@ -9,6 +9,7 @@ import time
 import subprocess
 import signal
 import psutil
+import cv2
 
 # from check import get_data
 
@@ -34,18 +35,22 @@ def task1():
 
 def task2():
     app.run(host='0.0.0.0', port=5000)
-
+    
 
 def task3():
     global data
     temp = 0
     while True:
         with tempfile.TemporaryFile() as tempf:
-            proc = subprocess.Popen(['py', 'D:\\Work\\rover_gui\\check.py'], stdout=tempf, shell=True)
+            proc = subprocess.Popen(['python' , ' ./sma.py'], stdout=tempf, shell=True)
             proc.wait()
             tempf.seek(0)
             data = tempf.read().decode()
             # os.killpg(os.getpgid(proc.pid), signal.SIGINT) # For Linux
+
+def task4():
+   global ser
+   ser = serial.Serial('/dev/ttyACM0', 9600)
 
 
 # import camera driver
@@ -104,15 +109,14 @@ def background_process_test():
 @app.route('/get_data')
 def get_data():
     global data
-    return str(data)
+    return "nothing"
 
 
 @app.route('/to_arduino', methods=['POST'])
 def to_arduino():
     print(request.form['key'])
-    # ser = serial.Serial('COM6', 9600)  # Change in Jetson
-    # ser.write(request.form['key'].encode())
-    # ser.close()
+    global ser
+    ser.write((request.form['key']+"\n").encode())
     return "nothing"
 
 
@@ -127,15 +131,26 @@ def form_data():
 if __name__ == '__main__':
     # app.run(debug=True)
     t1 = threading.Thread(target=task1, name='t1')
-    t2 = threading.Thread(target=task3, name='t2')
+    # t2 = threading.Thread(target=task3, name='t2')
     t3 = threading.Thread(target=task2, name='t3')
+    t4 = threading.Thread(target=task4, name='t4')
 
     # starting threads
     t1.start()
-    t2.start()
+    #t2.start()
     t3.start()
+    t4.start()
 
     # wait until all threads finish
     t1.join()
-    t2.join()
+    #t2.join()
     t3.join()
+    t4.join()
+
+    c = cv2.waitKey(0)
+    if 'q' == chr(c & 255):
+	t1.kill()
+	#t2.kill()
+	t3.kill()
+	exit(0)
+	# QuitProgram()
