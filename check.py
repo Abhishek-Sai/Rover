@@ -1,31 +1,35 @@
 import serial
 import time
 import json
+global json_data
 data = {}
-ser = serial.Serial('COM7', 9600)
+ser = serial.Serial('COM6', 9600)
 b = ser.readline()  # read a byte string
 string_n = b.decode()  # decode byte string into Unicode
 string = string_n.rstrip()  # remove \n and \r
 res = string.split()
-if res[0] == "INVALIDINVALID" or res[0] == "INVALID":
-    if res[1] == "lat":
-        latitude = res[2]
+if res[0] != "INVALID":
+    if res[0] == "lat":
+        latitude = res[1]
+        #data.append(latitude)
         # print(latitude)
         data['latitude'] = latitude
         json_data = json.dumps(data)
         # data.append(latitude)
-    if res[3] == "lon":
-        longitude = res[4]
+    if res[2] == "lon":
+        longitude = res[3]
         # print(longitude)
+        #data.append(longitude)
         data['longitude'] = longitude
         json_data = json.dumps(data)
         # data.append(longitude)
-    if res[5] == "ang":
-        angle = res[6]
+    if res[4] == "ang":
+        angle = res[5]
+        #data.append(angle)
         # print(angle)
         data['angle'] = angle
         json_data = json.dumps(data)
         # data.append(angle)
-print(json_data)
+print(string)
 ser.close()
 

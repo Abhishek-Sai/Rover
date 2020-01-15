@@ -1,2 +1,2 @@
 import sys
-print(" Hi %i" % int(sys.argv[2]))
+print(" Hi %i" % float(sys.argv[1]))

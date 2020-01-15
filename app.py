@@ -116,14 +116,15 @@ def background_process_test():
     return "nothing"
 
 
-@app.route('/get_data')
-def get_data():
-    global ser1
-    global data
-    if data is None:
-        return "nothing"
-    else:
-        return data
+# @app.route('/get_data')
+# def get_data():
+#     global ser1
+#     global data
+#     print(data)
+#     if data is None:
+#         return "nothing"
+#     else:
+#         return data
 
 
 
@@ -142,30 +143,30 @@ def to_arduino():
 
 @app.route('/form_data', methods=['POST'])
 def form_data():
-    os.system('py ./latilongi.py ' + request.form['latitude'] + ' ' + request.form['longitude'])
-    print(request.form['latitude'])
-    print(request.form['longitude'])
+    os.system('py ./path.py ' + request.form['latitude'] + ' ' + request.form['longitude'])
+    # print(request.form['latitude'])
+    # print(request.form['longitude'])
     return "nothing"
 
 
 if __name__ == '__main__':
     # app.run(debug=True)
     t1 = threading.Thread(target=task1, name='t1')
-    t2 = threading.Thread(target=task3, name='t2')
+    #t2 = threading.Thread(target=task3, name='t2')
     t4 = threading.Thread(target=task4, name='t4')
     #t5 = threading.Thread(target=task5, name='t5')
     t3 = threading.Thread(target=task2, name='t3')
 
     # starting threads
     t1.start()
-    t2.start()
+    #t2.start()
     t4.start()
     #t5.start()
     t3.start()
 
     # wait until all threads finish
     t1.join()
-    t2.join()
+    #t2.join()
     t4.join()
     #t5.join()
     t3.join()
