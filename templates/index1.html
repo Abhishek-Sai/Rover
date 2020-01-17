@@ -43,7 +43,7 @@
     $(document).ready(function () {
         $('body').bind('keypress', function (e) {
             console.log(e.keyCode)
-            if (e.which === 97 || e.which === 115 || e.which === 100 || e.which === 119 || e.which === 65 || e.which === 83 || e.which === 68 || e.which === 87) {
+            if (e.which === 97 || e.which === 115 || e.which === 100 || e.which === 119 || e.which === 65 || e.which === 83 || e.which === 68 || e.which === 87 || e.which === 9 || e.which === 73 || e.which === 105 || e.which === 74 || e.which === 106 || e.which === 75 || e.which === 107 || e.which === 85 || e.which === 117 || e.which == 80 || e.which == 112 || e.which == 76 || e.which == 108) {
                 console.log(e.keyCode)
                 payload = {
                     key: e.keyCode
@@ -67,14 +67,14 @@
                 return false;
             }
         });
-<!--        window.setInterval(function () {-->
-<!--            $.get('/get_data',function (data) {-->
-<!--                   console.log((data));-->
-<!--                   document.getElementById("printLatitude").value = data[5]+data[6]+data[7]+data[8]+data[9]+data[10]+data[11]+data[12]+data[13]+data[14]+data[15]+data[16]+data[17]+data[18]+data[19]+data[20]+data[21]+data[22]+data[23]+data[24]-->
-<!--                   document.getElementById("printLongitude").value = data[30]+data[31]+data[32]+data[33]+data[34]+data[35]+data[36]+data[37]+data[38]+data[39]+data[40]+data[41]+data[42]+data[43]+data[44]+data[45]+data[46]+data[47]-->
-<!--                   document.getElementById("printAngle").value = data[53] + data [54] + data[55]-->
-<!--            });-->
-<!--        }, 500 );-->
+        window.setInterval(function () {
+            $.get('/get_data',function (data) {
+                   console.log((data));
+                   document.getElementById("printLatitude").value = data[5]+data[6]+data[7]+data[8]+data[9]+data[10]+data[11]+data[12]+data[13]+data[14]+data[15]+data[16]+data[17]+data[18]+data[19]+data[20]+data[21]+data[22]+data[23]+data[24]
+                   document.getElementById("printLongitude").value = data[29]+data[30]+data[31]+data[32]+data[33]+data[34]+data[35]+data[36]+data[37]+data[38]+data[39]+data[40]+data[41]+data[42]+data[43]+data[44]+data[45]+data[46]+data[47]
+                   document.getElementById("printAngle").value = data[53] + data [54] + data[55]
+            });
+        }, 500 );
     });
 });
 </script>
